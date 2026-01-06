@@ -82,6 +82,8 @@ pub trait WindowExtUnix {
   /// Returns `None` if the default vertical `gtk::Box` creation was disabled by [`WindowBuilderExtUnix::with_default_vbox`].
   fn default_vbox(&self) -> Option<&gtk::Box>;
 
+  fn fixed(&self) -> Option<&gtk::Fixed>;
+
   /// Whether to show the window icon in the taskbar or not.
   fn set_skip_taskbar(&self, skip: bool) -> Result<(), ExternalError>;
 
@@ -95,6 +97,10 @@ impl WindowExtUnix for Window {
 
   fn default_vbox(&self) -> Option<&gtk::Box> {
     self.window.default_vbox.as_ref()
+  }
+
+  fn fixed(&self) -> Option<&gtk::Fixed> {
+    self.window.fixed.as_ref()
   }
 
   fn set_skip_taskbar(&self, skip: bool) -> Result<(), ExternalError> {
