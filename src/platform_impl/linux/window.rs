@@ -168,15 +168,12 @@ impl Window {
       None
     };
 
-    let fixed = match default_vbox {
-        Some(ref vbox) => {
-          let fixed = gtk::Fixed::new();
-          vbox.pack_start(&fixed, true, true, 0);
-          fixed.show_all();
-          Some(fixed)
-        },
-        None => None,
-    };
+    let fixed = default_vbox.as_ref().map(|vbox| {
+      let fixed = gtk::Fixed::new();
+      vbox.pack_start(&fixed, true, true, 0);
+      fixed.show_all();
+      fixed
+    });
 
     // Rest attributes
     window.set_title(&attributes.title);
@@ -454,6 +451,10 @@ impl Window {
     };
 
     Ok(win)
+  }
+
+  pub(crate) fn fixed(&self) -> Option<&gtk::Fixed> {
+    self.fixed.as_ref()
   }
 
   pub fn id(&self) -> WindowId {
